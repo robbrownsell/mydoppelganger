@@ -23,29 +23,30 @@
     </head>
     <body>
         <%@ include file="header.jsp" %>
-        <h1>Enter your name</h1>
-        <spring:nestedPath path="profile">
-            <form action="submitProfile.htm" method="post">
+        <h1>Register</h1>
+
+
+
+        <form:form modelAttribute="profile" action="submitProfile.htm" method="post">
+            <form:errors path="profileUser.username" />
+
                 <table border ="1">
                     <tr><td>
                             Forename:
                         </td>
                         <td>
-                            <spring:bind path="forename">
-                                <input type="text" name="${status.expression}" value="${status.value}">
-                            </spring:bind>
+                            <form:input path="forename" type="text" name="${status.expression}" value="${status.value}"/>
                             <form:errors path="forename" >
                                 forename must be between 2 and 30 characters in length
                             </form:errors>
                         </td>
                     </tr>
-                    <tr><td>
+                    <tr>
+                        <td>
                             Surname:
                         </td>
                         <td>
-                            <spring:bind path="surname">
-                                <input type="text" name="${status.expression}" value="${status.value}">
-                            </spring:bind>
+                            <form:input path="surname" type="text" name="${status.expression}" value="${status.value}"/>
                             <form:errors path="surname">
                                 surname must be between 2 and 50 characters in length
                             </form:errors>
@@ -55,9 +56,7 @@
                             Username:
                         </td>
                         <td>
-                            <spring:bind path="profileUser.username">
-                                <input type="text" name="${status.expression}" value="${status.value}">
-                            </spring:bind>
+                            <form:input path="profileUser.username" id="username" type="text" name="${status.expression}" value="${status.value}"/>
                             <form:errors path="profileUser.username">
                                 must be at least 6 characters
                             </form:errors>
@@ -67,9 +66,7 @@
                             Password:
                         </td>
                         <td>
-                            <spring:bind path="profileUser.password">
-                                <input type="password" name="${status.expression}" value="${status.value}">
-                            </spring:bind>
+                            <form:input path="profileUser.password" type="password" name="${status.expression}" value="${status.value}"/>
                             <form:errors path="profileUser.password">
                                 must be at least 6 characters
                             </form:errors>
@@ -79,11 +76,9 @@
                             Date of Birth:
                         </td>
                         <td>
-                            <spring:bind path="dob">
-                                <input id="dob" type="text" name="${status.expression}" value="${status.value}">
-                            </spring:bind>
+                            <form:input path="dob" id="dob" type="text" name="${status.expression}" value="${status.value}"/>
                             <form:errors path="dob">
-                            DOB must be of format dd/mm/yyyy    
+                                DOB must be of format dd/mm/yyyy    
                             </form:errors>
                         </td>
                     </tr>
@@ -93,8 +88,9 @@
                         </td>
                     </tr>
                 </table>
-            </form>
-        </spring:nestedPath>
+
+        </form:form>
+
         <%@ include file="footer.jsp" %>
     </body>
 </html>

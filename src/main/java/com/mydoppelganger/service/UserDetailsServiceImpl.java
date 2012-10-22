@@ -31,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private ProfileDAOInterface profileDao;
 
     @Transactional(readOnly = true)
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         Profile profile = profileDao.findByUsername(username);
         User user = null;

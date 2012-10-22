@@ -44,7 +44,7 @@ public class ProfileUser implements Serializable {
     private Long profileId;
     @NotNull
     @Size(min=6)
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique=true)
     private String username;
     @NotNull
     @Size(min=6)

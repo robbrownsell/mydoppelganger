@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,11 +39,18 @@ public class RegisterController {
     @RequestMapping(value = "/submitProfile", method = RequestMethod.POST)
     public ModelAndView submitDetails(@Valid Profile profile, BindingResult result) {
         String nextPage = "showProfile";
-        if(result.hasErrors()) {
+
+        if (result.hasErrors()) {
             nextPage = "registerProfile";
-            
+
         } else {
-            profileService.createProfile(profile);
+            if (profileService.loadProfile(profile.getProfileUser().getUsername()) != null) {
+                //user already exists
+                nextPage = "registerProfile";
+                result.addError(new ObjectError("profileUser.username", "username invalid"));
+            } else {
+                profileService.createProfile(profile);
+            }
         }
         ModelAndView mv = new ModelAndView(nextPage);
         mv.addObject("profile", profile);
